@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 public class MyTest {
     @BeforeEach
     public void setup(){
-
+        //Изуть pipelines, tools i stages
     }
 
     @Test
