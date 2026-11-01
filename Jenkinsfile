@@ -5,6 +5,9 @@ pipeline {
         skipDefaultCheckout(true)
         timeout(time: 20, unit: 'MINUTES')
     }
+    tools{
+        maven 'mavenv2'
+    }
 
     stages {
         stage('Checkout') {
