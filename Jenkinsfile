@@ -17,19 +17,19 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                        sh '''
-                            chmod +x gradlew
-                            ./gradlew --no-daemon clean build
-                        '''
+                        sh 'mvn -B clean verify'
                     } else {
-                        bat 'gradlew.bat --no-daemon clean build'
+                        bat 'mvn -B clean verify'
                     }
                 }
             }
 
             post {
                 always {
-                    junit testResults: '/build/test-results/test/*.xml'
+                    junit(
+                        testResults: '/target/surefire-reports/TEST-*.xml,/target/failsafe-reports/TEST-*.xml',
+                        allowEmptyResults: true
+                    )
                 }
             }
         }
@@ -37,7 +37,7 @@ pipeline {
         stage('Save JAR') {
             steps {
                 archiveArtifacts(
-                    artifacts: '/build/libs/*.jar',
+                    artifacts: '**/target/*.jar',
                     fingerprint: true
                 )
             }
